@@ -62,6 +62,13 @@ func Parse(src []byte, filename string) (*hcl.File, hcl.Diagnostics) {
 	return file, diags
 }
 
+// ParseExpression parses the given buffer as a standalone JSON expression,
+// returning it as an instance of Expression.
+func ParseExpression(src []byte, filename string, start hcl.Pos) (hcl.Expression, hcl.Diagnostics) {
+	node, diags := parseExpression(src, filename, start)
+	return &expression{src: node}, diags
+}
+
 // ParseFile is a convenience wrapper around Parse that first attempts to load
 // data from the given filename, passing the result to Parse if successful.
 //
