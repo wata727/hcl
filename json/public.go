@@ -17,8 +17,8 @@ import (
 // The returned file is valid only if the returned diagnostics returns false
 // from its HasErrors method. If HasErrors returns true, the file represents
 // the subset of data that was able to be parsed, which may be none.
-func Parse(src []byte, filename string) (*hcl.File, hcl.Diagnostics) {
-	rootNode, diags := parseFileContent(src, filename)
+func Parse(src []byte, filename string, start hcl.Pos) (*hcl.File, hcl.Diagnostics) {
+	rootNode, diags := parseFileContentWithPos(src, filename, start)
 
 	switch rootNode.(type) {
 	case *objectVal, *arrayVal:
@@ -97,5 +97,9 @@ func ParseFile(filename string) (*hcl.File, hcl.Diagnostics) {
 		}
 	}
 
-	return Parse(src, filename)
+	return Parse(src, filename, hcl.Pos{
+		Byte:   0,
+		Line:   1,
+		Column: 1,
+	})
 }

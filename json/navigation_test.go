@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"testing"
+
+	"github.com/hashicorp/hcl/v2"
 )
 
 func TestNavigationContextString(t *testing.T) {
@@ -24,7 +26,7 @@ func TestNavigationContextString(t *testing.T) {
   }
 }
 `
-	file, diags := Parse([]byte(src), "test.json")
+	file, diags := Parse([]byte(src), "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if len(diags) != 0 {
 		fmt.Printf("offset %d\n", diags[0].Subject.Start.Byte)
 		t.Errorf("Unexpected diagnostics: %s", diags)

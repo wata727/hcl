@@ -61,7 +61,7 @@ func Decode(filename string, src []byte, ctx *hcl.EvalContext, target interface{
 	case ".hcl":
 		file, diags = hclsyntax.ParseConfig(src, filename, hcl.Pos{Line: 1, Column: 1})
 	case ".json":
-		file, diags = json.Parse(src, filename)
+		file, diags = json.Parse(src, filename, hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	default:
 		diags = diags.Append(&hcl.Diagnostic{
 			Severity: hcl.DiagError,

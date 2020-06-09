@@ -10,7 +10,7 @@ import (
 
 func TestParse_nonObject(t *testing.T) {
 	src := `true`
-	file, diags := Parse([]byte(src), "")
+	file, diags := Parse([]byte(src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if len(diags) != 1 {
 		t.Errorf("got %d diagnostics; want 1", len(diags))
 	}
@@ -27,7 +27,7 @@ func TestParse_nonObject(t *testing.T) {
 
 func TestParseTemplate(t *testing.T) {
 	src := `{"greeting": "hello ${\"world\"}"}`
-	file, diags := Parse([]byte(src), "")
+	file, diags := Parse([]byte(src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if len(diags) != 0 {
 		t.Errorf("got %d diagnostics on parse; want 0", len(diags))
 		for _, diag := range diags {
@@ -63,7 +63,7 @@ func TestParseTemplate(t *testing.T) {
 
 func TestParseTemplateUnwrap(t *testing.T) {
 	src := `{"greeting": "${true}"}`
-	file, diags := Parse([]byte(src), "")
+	file, diags := Parse([]byte(src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if len(diags) != 0 {
 		t.Errorf("got %d diagnostics on parse; want 0", len(diags))
 		for _, diag := range diags {
@@ -101,7 +101,7 @@ func TestParse_malformed(t *testing.T) {
 	src := `{
   "http_proxy_url: "http://xxxxxx",
 }`
-	file, diags := Parse([]byte(src), "")
+	file, diags := Parse([]byte(src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if got, want := len(diags), 2; got != want {
 		t.Errorf("got %d diagnostics; want %d", got, want)
 	}

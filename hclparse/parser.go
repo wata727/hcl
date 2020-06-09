@@ -88,7 +88,7 @@ func (p *Parser) ParseJSON(src []byte, filename string) (*hcl.File, hcl.Diagnost
 		return existing, nil
 	}
 
-	file, diags := json.Parse(src, filename)
+	file, diags := json.Parse(src, filename, hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	p.files[filename] = file
 	return file, diags
 }

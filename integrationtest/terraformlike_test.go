@@ -33,6 +33,7 @@ func TestTerraformLike(t *testing.T) {
 			return json.Parse(
 				[]byte(terraformLikeJSON),
 				"config.tf.json",
+				hcl.Pos{Byte: 0, Line: 1, Column: 1},
 			)
 		},
 	}

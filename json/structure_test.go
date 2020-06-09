@@ -1058,7 +1058,7 @@ func TestBodyPartialContent(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%02d-%s", i, test.src), func(t *testing.T) {
-			file, diags := Parse([]byte(test.src), "test.json")
+			file, diags := Parse([]byte(test.src), "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if len(diags) != 0 {
 				t.Fatalf("Parse produced diagnostics: %s", diags)
 			}
@@ -1121,7 +1121,7 @@ func TestBodyContent(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%02d-%s", i, test.src), func(t *testing.T) {
-			file, diags := Parse([]byte(test.src), "test.json")
+			file, diags := Parse([]byte(test.src), "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if len(diags) != 0 {
 				t.Fatalf("Parse produced diagnostics: %s", diags)
 			}
@@ -1216,7 +1216,7 @@ func TestJustAttributes(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%02d-%s", i, test.src), func(t *testing.T) {
-			file, diags := Parse([]byte(test.src), "test.json")
+			file, diags := Parse([]byte(test.src), "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if len(diags) != 0 {
 				t.Fatalf("Parse produced diagnostics: %s", diags)
 			}
@@ -1307,7 +1307,7 @@ func TestExpressionVariables(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.Src, func(t *testing.T) {
-			file, diags := Parse([]byte(test.Src), "test.json")
+			file, diags := Parse([]byte(test.Src), "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if len(diags) != 0 {
 				t.Fatalf("Parse produced diagnostics: %s", diags)
 			}
@@ -1376,7 +1376,7 @@ func TestExpression_Value(t *testing.T) {
 		"null": cty.NullVal(cty.DynamicPseudoType),
 	}
 
-	file, diags := Parse([]byte(src), "")
+	file, diags := Parse([]byte(src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 	if len(diags) != 0 {
 		t.Errorf("got %d diagnostics on parse; want 0", len(diags))
 		for _, diag := range diags {
@@ -1482,7 +1482,7 @@ func TestExpressionValue_Diags(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			file, diags := Parse([]byte(c.src), "")
+			file, diags := Parse([]byte(c.src), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 
 			if len(diags) != 0 {
 				t.Errorf("got %d diagnostics on parse; want 0", len(diags))

@@ -634,7 +634,7 @@ func TestDecodeBody(t *testing.T) {
 		}
 
 		t.Run(string(buf), func(t *testing.T) {
-			file, diags := hclJSON.Parse(buf, "test.json")
+			file, diags := hclJSON.Parse(buf, "test.json", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if len(diags) != 0 {
 				t.Fatalf("diagnostics while parsing: %s", diags.Error())
 			}

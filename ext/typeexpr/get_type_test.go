@@ -312,7 +312,7 @@ func TestGetTypeJSON(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.Source, func(t *testing.T) {
-			file, diags := json.Parse([]byte(test.Source), "")
+			file, diags := json.Parse([]byte(test.Source), "", hcl.Pos{Byte: 0, Line: 1, Column: 1})
 			if diags.HasErrors() {
 				t.Fatalf("failed to parse: %s", diags)
 			}
